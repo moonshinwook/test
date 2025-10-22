@@ -1,7 +1,0 @@
-﻿  main.c
-C:\Users\문신욱\Desktop\Test\Test\Test\main.c(54,19): warning C4244: '함수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  main2.c
-C:\Users\문신욱\Desktop\Test\Test\Test\main2.c(22,15): warning C4244: '함수': 'time_t'에서 'unsigned int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-  코드를 생성하고 있습니다...
-C:\Users\문신욱\Desktop\Test\Test\Test\main2.c(143,1): error C4703: 초기화되지 않았을 수 있는 로컬 포인터 변수 'computerHand'이(가) 사용되었습니다.
-C:\Users\문신욱\Desktop\Test\Test\Test\main.c(131,1): error C4703: 초기화되지 않았을 수 있는 로컬 포인터 변수 'computerHand'이(가) 사용되었습니다.
