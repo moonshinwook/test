@@ -193,13 +193,13 @@ int main(void) {
 			playerMaxHP = 3.0f;  // 철수 ♡♡♡
 			playerATK = 1.0f;  // ATK 1.0
 			playerHP = playerMaxHP;
-			printf("\n[철수 선택] HP=♥♥♥, 공격력=1.0f\n");
+			printf("\n[철수 선택] HP=♥♥♥, 공격력=1.0\n");
 		}
 		else if (character == 2) {
 			playerMaxHP = 2.0f;  // 영희 ♡♡
 			playerATK = 1.5f;  // ATK 1.5
 			playerHP = playerMaxHP;
-			printf("\n[영희 선택] HP=♥♥, 공격력=1.5f\n");
+			printf("\n[영희 선택] HP=♥♥, 공격력=1.5\n");
 		}
 		else 
 		{
