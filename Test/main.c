@@ -1,31 +1,95 @@
-#include <stdio.h>
+ï»¿#include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
+#include <locale.h>   // ì½˜ì†”ì— â™¥/â™¡ ê¹¨ì§ ë°©ì§€ (ìœˆë„ìš°ë©´ í•„ìš”)
 
-/* °¡À§¹ÙÀ§º¸ ¸ÅÇÎ: 1=°¡À§, 2=¹ÙÀ§, 3=º¸ */
+
+
+
+/* ê°€ìœ„ë°”ìœ„ë³´ ë§¤í•‘: 1=ê°€ìœ„, 2=ë°”ìœ„, 3=ë³´ */
 int getEnemyHand(void) {
 	return (rand() % 3) + 1;
 }
 
 const char* handName(int h) {
-	if (h == 1) return "°¡À§";
-	if (h == 2) return "¹ÙÀ§";
-	return "º¸";
+	if (h == 1) return "ê°€ìœ„";
+	if (h == 2) return "ë°”ìœ„";
+	return "ë³´";
 }
 
-/* ÀüÅõ 1¶ó¿îµå Ã³¸®: ½ÂÆĞ ¹İÈ¯ (1=ÇÃ·¹ÀÌ¾î ½Â, -1=ÆĞ, 0=¹«) */
+/* ì „íˆ¬ 1ë¼ìš´ë“œ ì²˜ë¦¬: ìŠ¹íŒ¨ ë°˜í™˜ (1=í”Œë ˆì´ì–´ ìŠ¹, -1=íŒ¨, 0=ë¬´) */
 int rpsResult(int p, int e) {
 	if (p == e) return 0;
 	if ((p == 1 && e == 3) || (p == 2 && e == 1) || (p == 3 && e == 2)) return 1;
 	return -1;
 }
 
-/* ÇöÀç Ã¼·Â Ãâ·Â (¼Ò¼ö 1ÀÚ¸®) */
-void showStatus(float playerHP, float enemyHP) {
-	printf("ÇöÀç ³» Ã¼·Â: %.1f / ÇöÀç Àû Ã¼·Â: %.1f\n", playerHP, enemyHP);
+/* í˜„ì¬ ì²´ë ¥ ì¶œë ¥ (ì†Œìˆ˜ 1ìë¦¬) */
+
+
+///* í•˜íŠ¸ë¡œ ì²´ë ¥ ì¶œë ¥ (â™¥=ë‚¨ì€ ì²´ë ¥, ğŸ’”=ë°˜í•˜íŠ¸, â™¡=ë¹ˆì¹¸) */ -> ë°˜í•˜íŠ¸ê¹¨ì§ìœ¼ë¡œ ë°‘ì— ì½”ë“œë¡œ ëŒ€ì²´
+//void printHearts(float hp, float maxHp) {
+//	if (maxHp > 5.0f) maxHp = 5.0f;
+//	if (hp < 0.0f) hp = 0.0f;
+//	if (hp > maxHp) hp = maxHp;
+//
+//	int fullHearts = (int)hp;             // ì •ìˆ˜ë¶€ë¶„ = ì™„ì „í•œ â™¥ ê°œìˆ˜
+//	int maxH = (int)roundf(maxHp);
+//	int hasHalf = 0;
+//
+//	// ì†Œìˆ˜ì  ë¶€ë¶„ì´ 0.3~0.8 ì‚¬ì´ë©´ ë°˜í•˜íŠ¸ ì¶œë ¥
+//	if (hp - fullHearts >= 0.3f && hp - fullHearts < 0.8f)
+//		hasHalf = 1;
+//
+//	// â™¥ ì¶œë ¥
+//	for (int i = 0; i < fullHearts; i++)
+//		printf("â™¥");
+//
+//	// ğŸ’” ì¶œë ¥ (ì ˆë°˜ í•˜íŠ¸)
+//	if (hasHalf)
+//		printf("ğŸ’”");
+//
+//	// â™¡ ì¶œë ¥ (ë¹ˆì¹¸)
+//	for (int i = fullHearts + hasHalf; i < maxH; i++)
+//		printf("â™¡");
+//}
+/* í•˜íŠ¸ ì¶œë ¥: â™¥=ì±„ì›€, â—=ë°˜, â™¡=ë¹ˆì¹¸ (UTF-8 í…ìŠ¤íŠ¸) */
+void printHearts(float hp, float maxHp) {
+	if (maxHp > 5.0f) maxHp = 5.0f;
+	if (hp < 0.0f) hp = 0.0f;
+	if (hp > maxHp) hp = maxHp;
+
+	int full = (int)hp;
+	float frac = hp - full;
+	int half = (frac >= 0.3f && frac < 0.8f) ? 1 : 0;
+	int maxH = (int)maxHp;
+
+	for (int i = 0; i < full; ++i) printf("â™¥");
+	if (half) printf("â—");              // ğŸ’” ëŒ€ì‹  â— ì‚¬ìš© (ì•ˆ ê¹¨ì§)
+	for (int i = full + half; i < maxH; ++i) printf("â™¡");
+}
+void drawUI(float pHP, float pMaxHP, float eHP, float eMaxHP) {
+	system("cls");                  // ì½˜ì†” ì§€ìš°ê¸° (Windows)
+	printf("ë‚´ ì²´ë ¥: ");
+	printHearts(pHP, pMaxHP);
+	printf("  |  ì  ì²´ë ¥: ");
+	printHearts(eHP, eMaxHP);
+	printf("\n");                   // ìƒíƒœë¼ì¸ 1ì¤„ë§Œ
 }
 
-/* ÇÑ ½ºÅ×ÀÌÁö ÀüÅõ ·çÇÁ (ÇÃ·¹ÀÌ¾î°¡ ÀÌ±â¸é 1, Áö¸é 0) */
+
+/* ìƒíƒœ ì¤„ ì¶œë ¥ */
+void showStatus(float playerHP, float playerMaxHP, float enemyHP, float enemyMaxHP) {
+	printf("\r ë‚´ ì²´ë ¥: "); // \r í™”ë©´ ìœ„ë¡œ ìŠ¤í¬ë¡¤ ë°©ì§€
+	printHearts(playerHP, playerMaxHP);
+	printf("  |  ì  ì²´ë ¥: ");
+	printHearts(enemyHP, enemyMaxHP);
+	printf("\n");
+}
+
+
+/* í•œ ìŠ¤í…Œì´ì§€ ì „íˆ¬ ë£¨í”„ (í”Œë ˆì´ì–´ê°€ ì´ê¸°ë©´ 1, ì§€ë©´ 0) */
 int playStage(
 	int stageNo,
 	float* pHP,
@@ -40,133 +104,134 @@ int playStage(
 	int enemyHand = 0;
 	int result = 0;
 
-	printf("\n===== ½ºÅ×ÀÌÁö %d: %s µîÀå! (Àû HP=%.1f, ATK=%.1f) =====\n",
+	printf("\n===== ìŠ¤í…Œì´ì§€ %d: %s ë“±ì¥! (ì  HP=%.1f, ê³µê²©ë ¥=%.1f) =====\n",
 		stageNo, enemyName, enemyMaxHP, enemyATK);
 
 	while (*pHP > 0.0f && enemyHP > 0.0f) {
-		printf("\n¹«¾ùÀ» ³»°Ú½À´Ï±î? (1=°¡À§, 2=¹ÙÀ§, 3=º¸) ÀÔ·Â: ");
+		printf("\në¬´ì—‡ì„ ë‚´ê² ìŠµë‹ˆê¹Œ? (1=ê°€ìœ„, 2=ë°”ìœ„, 3=ë³´) ì…ë ¥: ");
 		if (scanf_s("%d", &playerHand) != 1) {
-			printf("ÀÔ·ÂÀÌ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù. °ÔÀÓÀ» Á¾·áÇÕ´Ï´Ù.\n");
+			printf("ì…ë ¥ì´ ì˜¬ë°”ë¥´ì§€ ì•ŠìŠµë‹ˆë‹¤. ê²Œì„ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.\n");
 			return 0;
 		}
 		if (playerHand < 1 || playerHand > 3) {
-			printf("1~3 Áß¿¡¼­ ¼±ÅÃÇÏ¼¼¿ä.\n");
+			printf("1~3 ì¤‘ì—ì„œ ì„ íƒí•˜ì„¸ìš”.\n");
 			continue;
 		}
 
 		enemyHand = getEnemyHand();
 
-		printf("´ç½Å: %s  vs  Àû: %s\n", handName(playerHand), handName(enemyHand));
+		printf("ë‹¹ì‹ : %s  vs  ì : %s\n", handName(playerHand), handName(enemyHand));
 		result = rpsResult(playerHand, enemyHand);
 
 		if (result == 1) {
 			enemyHP -= *pATK;
 			if (enemyHP < 0.0f) enemyHP = 0.0f;
-			printf("ÀÌ°å½À´Ï´Ù! Àû¿¡°Ô %.1f ÇÇÇØ¸¦ ÀÔÇû½À´Ï´Ù.\n", *pATK);
+			printf("ì´ê²¼ìŠµë‹ˆë‹¤! ì ì—ê²Œ %.1f í”¼í•´ë¥¼ ì…í˜”ìŠµë‹ˆë‹¤.\n", *pATK);
 		}
 		else if (result == -1) {
 			*pHP -= enemyATK;
 			if (*pHP < 0.0f) *pHP = 0.0f;
-			printf("Á³½À´Ï´Ù... ³»°¡ %.1f ÇÇÇØ¸¦ ¹Ş¾Ò½À´Ï´Ù.\n", enemyATK);
+			printf("ì¡ŒìŠµë‹ˆë‹¤... ë‚´ê°€ %.1f í”¼í•´ë¥¼ ë°›ì•˜ìŠµë‹ˆë‹¤.\n", enemyATK);
 		}
 		else {
-			printf("ºñ°å½À´Ï´Ù. ÇÇÇØ°¡ ¾ø½À´Ï´Ù.\n");
+			printf("ë¹„ê²¼ìŠµë‹ˆë‹¤. í”¼í•´ê°€ ì—†ìŠµë‹ˆë‹¤.\n");
 		}
 
-		showStatus(*pHP, enemyHP);
+		showStatus(*pHP, pMaxHP, enemyHP, enemyMaxHP);
 	}
 
 	if (*pHP <= 0.0f) {
-		printf("\n¾²·¯Á³½À´Ï´Ù... (HP=0)\n");
-		return 0; // ÆĞ¹è
+		printf("\nì“°ëŸ¬ì¡ŒìŠµë‹ˆë‹¤... (HP=0)\n");
+		return 0; // íŒ¨ë°°
 	}
 
-	/* ½ºÅ×ÀÌÁö Å¬¸®¾î */
-	printf("\n½ºÅ×ÀÌÁö %d Å¬¸®¾î!\n", stageNo);
+	/* ìŠ¤í…Œì´ì§€ í´ë¦¬ì–´ */
+	printf("\nìŠ¤í…Œì´ì§€ %d í´ë¦¬ì–´!\n", stageNo);
 
-	/* Ã¼·Â ÀüºÎ È¸º¹ */
+	/* ì²´ë ¥ ì „ë¶€ íšŒë³µ */
 	*pHP = pMaxHP;
-	if (*pHP > 5.0f) *pHP = 5.0f; // °ÔÀÓ ³» ÃÖ´ëÃ¼·Â 5
+	if (*pHP > 5.0f) *pHP = 5.0f; // ê²Œì„ ë‚´ ìµœëŒ€ì²´ë ¥ 5
 
-	/* ¾ÆÀÌÅÛ Áö±Ş (0=È¸º¹ÅÛ, 1=°ø°İ·Â +0.4) */
+	/* ì•„ì´í…œ ì§€ê¸‰ (0=íšŒë³µí…œ, 1=ê³µê²©ë ¥ +0.4) */
 	int item = rand() % 2;
 	if (item == 0) {
-		printf("[º¸»ó] È¸º¹ÅÛ È¹µæ! (ÀÌ¹Ì ÀüºÎ È¸º¹µÊ)\n");
+		printf("[ë³´ìƒ] íšŒë³µí…œ íšë“! (ì´ë¯¸ ì „ë¶€ íšŒë³µë¨)\n");
 	}
 	else {
 		*pATK += 0.4f;
-		printf("[º¸»ó] °ø°İ·Â °­È­! ATK +0.4 ¡æ ÇöÀç ATK=%.1f\n", *pATK);
+		printf("[ë³´ìƒ] ê³µê²©ë ¥ ê°•í™”! ATK +0.4 â†’ í˜„ì¬ ê³µê²©ë ¥=%.1f\n", *pATK);
 	}
 
-	printf("Ã¼·Â ÀüºÎ È¸º¹! ÇöÀç HP=%.1f (ÃÖ´ë 5.0)\n", *pHP);
-	return 1; // ½Â¸®
+	printf("ì²´ë ¥ ì „ë¶€ íšŒë³µ! í˜„ì¬ HP=%.1f (ìµœëŒ€ 5.0)\n", *pHP);
+	return 1; // ìŠ¹ë¦¬
 }
 
 int main(void) {
-	int character = 0;     // 1=Ã¶¼ö, 2=¿µÈñ
-	float playerHP = 0.0f; // ÇöÀç Ã¼·Â
-	float playerATK = 0.0f;// ÇöÀç °ø°İ·Â
-	float playerMaxHP = 0.0f; // Ä³¸¯ÅÍ ÃÖ´ë Ã¼·Â(½ºÅ×ÀÌÁö È¸º¹ ±âÁØ)
+	int character = 0;     // 1=ì² ìˆ˜, 2=ì˜í¬
+	float playerHP = 0.0f; // í˜„ì¬ ì²´ë ¥
+	float playerATK = 0.0f;// í˜„ì¬ ê³µê²©ë ¥
+	float playerMaxHP = 0.0f; // ìºë¦­í„° ìµœëŒ€ ì²´ë ¥(ìŠ¤í…Œì´ì§€ íšŒë³µ ê¸°ì¤€)
 	int gameOn = 1;
 
-	/* ³­¼ö ½Ãµå ¼³Á¤ (¸í½ÃÀû Ä³½ºÆÃÀ¸·Î °æ°í ¹æÁö) */
+	/* ë‚œìˆ˜ ì‹œë“œ ì„¤ì • (ëª…ì‹œì  ìºìŠ¤íŒ…ìœ¼ë¡œ ê²½ê³  ë°©ì§€) */
 	time_t now = time(NULL);
 	unsigned int seed = (unsigned int)now;
 	srand(seed);
 
 	while (gameOn) {
-		/* Ä³¸¯ÅÍ ¼±ÅÃ */
-		printf("\n=== °¡À§ ¹ÙÀ§ º¸ RPG °ÔÀÓ ½ÃÀÛ! ===\n");
-		printf("Ä³¸¯ÅÍ¸¦ ¼±ÅÃÇÏ½Ã¿À.\n");
-		printf("Ã¶¼ö = 1, ¿µÈñ = 2 ¸¦ ´©¸£¼¼¿ä: ");
+		/* ìºë¦­í„° ì„ íƒ */
+		printf("\n=== ê°€ìœ„ ë°”ìœ„ ë³´ RPG ê²Œì„ ì‹œì‘! ===\n");
+		printf("ìºë¦­í„°ë¥¼ ì„ íƒí•˜ì‹œì˜¤.\n");
+		printf("ì² ìˆ˜ = 1, ì˜í¬ = 2 ë¥¼ ëˆ„ë¥´ì„¸ìš”: ");
 
 		if (scanf_s("%d", &character) != 1) {
-			printf("ÀÔ·ÂÀÌ ¿Ã¹Ù¸£Áö ¾Ê½À´Ï´Ù. ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù.\n");
+			printf("ì…ë ¥ì´ ì˜¬ë°”ë¥´ì§€ ì•ŠìŠµë‹ˆë‹¤. í”„ë¡œê·¸ë¨ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.\n");
 			break;
 		}
 
 		if (character == 1) {
-			playerMaxHP = 3.0f;  // Ã¶¼ö ¢½¢½¢½
+			playerMaxHP = 3.0f;  // ì² ìˆ˜ â™¡â™¡â™¡
 			playerATK = 1.0f;  // ATK 1.0
 			playerHP = playerMaxHP;
-			printf("\n[Ã¶¼ö ¼±ÅÃ] HP=%.1f, ATK=%.1f\n", playerHP, playerATK);
+			printf("\n[ì² ìˆ˜ ì„ íƒ] HP=â™¥â™¥â™¥, ê³µê²©ë ¥=1.0f\n");
 		}
 		else if (character == 2) {
-			playerMaxHP = 2.0f;  // ¿µÈñ ¢½¢½
+			playerMaxHP = 2.0f;  // ì˜í¬ â™¡â™¡
 			playerATK = 1.5f;  // ATK 1.5
 			playerHP = playerMaxHP;
-			printf("\n[¿µÈñ ¼±ÅÃ] HP=%.1f, ATK=%.1f\n", playerHP, playerATK);
+			printf("\n[ì˜í¬ ì„ íƒ] HP=â™¥â™¥, ê³µê²©ë ¥=1.5f\n");
 		}
-		else {
-			printf("1 ¶Ç´Â 2¸¦ ¼±ÅÃÇÏ¼¼¿ä.\n");
-			continue; // ¼±ÅÃ ´Ù½Ã
+		else 
+		{
+			printf("1 ë˜ëŠ” 2ë¥¼ ì„ íƒí•˜ì„¸ìš”.\n");
+			continue; // ì„ íƒ ë‹¤ì‹œ
 		}
 
-		/* ½ºÅ×ÀÌÁö 1 */
-		if (!playStage(1, &playerHP, &playerATK, playerMaxHP, 3.0f, 1.0f, "Àû1(HP3, ATK1.0)")) 
+		/* ìŠ¤í…Œì´ì§€ 1 */
+		if (!playStage(1, &playerHP, &playerATK, playerMaxHP, 3.0f, 1.0f, "ì 1(â™¥â™¥â™¥, ê³µê²©ë ¥1.0)")) 
 		{
-			printf("Ä³¸¯ÅÍ ¼±ÅÃºÎÅÍ ´Ù½Ã ½ÃÀÛÇÕ´Ï´Ù.\n");
-			continue; // Ä³¸¯ÅÍ ¼±ÅÃÀ¸·Î µ¹¾Æ°¨
+			printf("ìºë¦­í„° ì„ íƒë¶€í„° ë‹¤ì‹œ ì‹œì‘í•©ë‹ˆë‹¤.\n");
+			continue; // ìºë¦­í„° ì„ íƒìœ¼ë¡œ ëŒì•„ê°
 		}
 
-		/* ½ºÅ×ÀÌÁö 2 */
-		if (!playStage(2, &playerHP, &playerATK, playerMaxHP, 2.0f, 1.5f, "Àû2(HP2, ATK1.5)")) 
+		/* ìŠ¤í…Œì´ì§€ 2 */
+		if (!playStage(2, &playerHP, &playerATK, playerMaxHP, 2.0f, 1.5f, "ì 2(â™¥â™¥, ê³µê²©ë ¥1.5)")) 
 		{
-			printf("Ä³¸¯ÅÍ ¼±ÅÃºÎÅÍ ´Ù½Ã ½ÃÀÛÇÕ´Ï´Ù.\n");
+			printf("ìºë¦­í„° ì„ íƒë¶€í„° ë‹¤ì‹œ ì‹œì‘í•©ë‹ˆë‹¤.\n");
 			continue;
 		}
 
-		/* º¸½º */
-		if (!playStage(3, &playerHP, &playerATK, playerMaxHP, 4.0f, 2.0f, "º¸½º(HP4, ATK2.0)")) 
+		/* ë³´ìŠ¤ */
+		if (!playStage(3, &playerHP, &playerATK, playerMaxHP, 4.0f, 2.0f, "ë³´ìŠ¤(â™¥â™¥â™¥â™¥, ê³µê²©ë ¥2.0)")) 
 		{
-			printf("Ä³¸¯ÅÍ ¼±ÅÃºÎÅÍ ´Ù½Ã ½ÃÀÛÇÕ´Ï´Ù.\n");
+			printf("ìºë¦­í„° ì„ íƒë¶€í„° ë‹¤ì‹œ ì‹œì‘í•©ë‹ˆë‹¤.\n");
 			continue;
 		}
 
-		/* ¸ğµç ½ºÅ×ÀÌÁö Å¬¸®¾î */
-		printf("\n½ºÅ×ÀÌÁö 1 Å¬¸®¾î, ½ºÅ×ÀÌÁö 2 Å¬¸®¾î, º¸½º¸¦ ¹°¸®ÃÆ½À´Ï´Ù!\n");
-		printf("°ÔÀÓ ³¡! ÇÃ·¹ÀÌÇØ ÁÖ¼Å¼­ °¨»çÇÕ´Ï´Ù.\n");
-		break; // ÇÁ·Î±×·¥ Á¾·á
+		/* ëª¨ë“  ìŠ¤í…Œì´ì§€ í´ë¦¬ì–´ */
+		printf("\nìŠ¤í…Œì´ì§€ 1 í´ë¦¬ì–´, ìŠ¤í…Œì´ì§€ 2 í´ë¦¬ì–´, ë³´ìŠ¤ë¥¼ ë¬¼ë¦¬ì³¤ìŠµë‹ˆë‹¤!\n");
+		printf("ê²Œì„ ë! í”Œë ˆì´í•´ ì£¼ì…”ì„œ ê°ì‚¬í•©ë‹ˆë‹¤.\n");
+		break; // í”„ë¡œê·¸ë¨ ì¢…ë£Œ
 	}
 
 	return 0;
