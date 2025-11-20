@@ -1,240 +1,119 @@
-﻿#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <math.h>
-#include <locale.h>   // 콘솔에 ♥/♡ 깨짐 방지 (윈도우면 필요)
+﻿#include "Game.h"
+
+// 프로젝트 
+// 로그라이크 모험 게임 
+
+// 플레이어와 게임 상태를 관리하는 구조체
+// const static 사용해보기 
 
 
 
 
-/* 가위바위보 매핑: 1=가위, 2=바위, 3=보 */
-int getEnemyHand(void) {
-	return (rand() % 3) + 1;
-}
+// main함수 
+int main() {
+	char RestartChoice = 0;
 
-const char* handName(int h) {
-	if (h == 1) return "가위";
-	if (h == 2) return "바위";
-	return "보";
-}
-
-/* 전투 1라운드 처리: 승패 반환 (1=플레이어 승, -1=패, 0=무) */
-int rpsResult(int p, int e) {
-	if (p == e) return 0;
-	if ((p == 1 && e == 3) || (p == 2 && e == 1) || (p == 3 && e == 2)) return 1;
-	return -1;
-}
-
-/* 현재 체력 출력 (소수 1자리) */
+	// 게임 재시작을 위한 while 루프
+	while (1) {
+		SelectCharacter();
+		Battlestat();
+		BattleHealth();
+		StartBattle();
+		stageReward();
 
 
-///* 하트로 체력 출력 (♥=남은 체력, 💔=반하트, ♡=빈칸) */ -> 반하트깨짐으로 밑에 코드로 대체
-//void printHearts(float hp, float maxHp) {
-//	if (maxHp > 5.0f) maxHp = 5.0f;
-//	if (hp < 0.0f) hp = 0.0f;
-//	if (hp > maxHp) hp = maxHp;
-//
-//	int fullHearts = (int)hp;             // 정수부분 = 완전한 ♥ 개수
-//	int maxH = (int)roundf(maxHp);
-//	int hasHalf = 0;
-//
-//	// 소수점 부분이 0.3~0.8 사이면 반하트 출력
-//	if (hp - fullHearts >= 0.3f && hp - fullHearts < 0.8f)
-//		hasHalf = 1;
-//
-//	// ♥ 출력
-//	for (int i = 0; i < fullHearts; i++)
-//		printf("♥");
-//
-//	// 💔 출력 (절반 하트)
-//	if (hasHalf)
-//		printf("💔");
-//
-//	// ♡ 출력 (빈칸)
-//	for (int i = fullHearts + hasHalf; i < maxH; i++)
-//		printf("♡");
-//}
-/* 하트 출력: ♥=채움, ◐=반, ♡=빈칸 (UTF-8 텍스트) */
-void printHearts(float hp, float maxHp) {
-	if (maxHp > 5.0f) maxHp = 5.0f;
-	if (hp < 0.0f) hp = 0.0f;
-	if (hp > maxHp) hp = maxHp;
+		printf("게임을 다시 시작하시겠습니까? : (Y / N)  ");
+		scanf(" %c", &RestartChoice);
 
-	int full = (int)hp;
-	float frac = hp - full;
-	int half = (frac >= 0.3f && frac < 0.8f) ? 1 : 0;
-	int maxH = (int)maxHp;
-
-	for (int i = 0; i < full; ++i) printf("♥");
-	if (half) printf("◐");              // 💔 대신 ◐ 사용 (안 깨짐)
-	for (int i = full + half; i < maxH; ++i) printf("♡");
-}
-void drawUI(float pHP, float pMaxHP, float eHP, float eMaxHP) {
-	system("cls");                  // 콘솔 지우기 (Windows)
-	printf("내 체력: ");
-	printHearts(pHP, pMaxHP);
-	printf("  |  적 체력: ");
-	printHearts(eHP, eMaxHP);
-	printf("\n");                   // 상태라인 1줄만
-}
+		// 입력 버퍼 비우기 (다음 입력에 영향 없도록)
+		int c;
+		while ((c = getchar()) != '\n' && c != EOF); // EOF -> 파일의 끝 표시: 프로그램이 파일을 순차적으로 읽어나갈 때 더 이상 읽을 데이터가 없다는 것을 알려주는 역할
 
 
-/* 상태 줄 출력 */
-void showStatus(float playerHP, float playerMaxHP, float enemyHP, float enemyMaxHP) {
-	printf("\r 내 체력: "); // \r 화면 위로 스크롤 방지
-	printHearts(playerHP, playerMaxHP);
-	printf("  |  적 체력: ");
-	printHearts(enemyHP, enemyMaxHP);
-	printf("\n");
-}
-
-
-/* 한 스테이지 전투 루프 (플레이어가 이기면 1, 지면 0) */
-int playStage(
-	int stageNo,
-	float* pHP,
-	float* pATK,
-	float  pMaxHP,
-	float  enemyMaxHP,
-	float  enemyATK,
-	const char* enemyName
-) {
-	float enemyHP = enemyMaxHP;
-	int playerHand = 0;
-	int enemyHand = 0;
-	int result = 0;
-
-	printf("\n===== 스테이지 %d: %s 등장! (적 HP=%.1f, 공격력=%.1f) =====\n",
-		stageNo, enemyName, enemyMaxHP, enemyATK);
-
-	while (*pHP > 0.0f && enemyHP > 0.0f) {
-		printf("\n무엇을 내겠습니까? (1=가위, 2=바위, 3=보) 입력: ");
-		if (scanf_s("%d", &playerHand) != 1) {
-			printf("입력이 올바르지 않습니다. 게임을 종료합니다.\n");
-			return 0;
-		}
-		if (playerHand < 1 || playerHand > 3) {
-			printf("1~3 중에서 선택하세요.\n");
-			continue;
-		}
-
-		enemyHand = getEnemyHand();
-
-		printf("당신: %s  vs  적: %s\n", handName(playerHand), handName(enemyHand));
-		result = rpsResult(playerHand, enemyHand);
-
-		if (result == 1) {
-			enemyHP -= *pATK;
-			if (enemyHP < 0.0f) enemyHP = 0.0f;
-			printf("이겼습니다! 적에게 %.1f 피해를 입혔습니다.\n", *pATK);
-		}
-		else if (result == -1) {
-			*pHP -= enemyATK;
-			if (*pHP < 0.0f) *pHP = 0.0f;
-			printf("졌습니다... 내가 %.1f 피해를 받았습니다.\n", enemyATK);
-		}
-		else {
-			printf("비겼습니다. 피해가 없습니다.\n");
-		}
-
-		showStatus(*pHP, pMaxHP, enemyHP, enemyMaxHP);
-	}
-
-	if (*pHP <= 0.0f) {
-		printf("\n쓰러졌습니다... (HP=0)\n");
-		return 0; // 패배
-	}
-
-	/* 스테이지 클리어 */
-	printf("\n스테이지 %d 클리어!\n", stageNo);
-
-	/* 체력 전부 회복 */
-	*pHP = pMaxHP;
-	if (*pHP > 5.0f) *pHP = 5.0f; // 게임 내 최대체력 5
-
-	/* 아이템 지급 (0=회복템, 1=공격력 +0.4) */
-	int item = rand() % 2;
-	if (item == 0) {
-		printf("[보상] 회복템 획득! (이미 전부 회복됨)\n");
-	}
-	else {
-		*pATK += 0.4f;
-		printf("[보상] 공격력 강화! ATK +0.4 → 현재 공격력=%.1f\n", *pATK);
-	}
-
-	printf("체력 전부 회복! 현재 HP=%.1f (최대 5.0)\n", *pHP);
-	return 1; // 승리
-}
-
-int main(void) {
-	int character = 0;     // 1=철수, 2=영희
-	float playerHP = 0.0f; // 현재 체력
-	float playerATK = 0.0f;// 현재 공격력
-	float playerMaxHP = 0.0f; // 캐릭터 최대 체력(스테이지 회복 기준)
-	int gameOn = 1;
-
-	/* 난수 시드 설정 (명시적 캐스팅으로 경고 방지) */
-	time_t now = time(NULL);
-	unsigned int seed = (unsigned int)now;
-	srand(seed);
-
-	while (gameOn) {
-		/* 캐릭터 선택 */
-		printf("\n=== 가위 바위 보 RPG 게임 시작! ===\n");
-		printf("캐릭터를 선택하시오.\n");
-		printf("철수 = 1, 영희 = 2 를 누르세요: \n");
-		printf("철수 체력: ♥♥♥, 공격력 : 1.0\n");
-		printf("영희 체력: ♥♥, 공격력 : 1.5\n");
-
-		if (scanf_s("%d", &character) != 1) {
-			printf("입력이 올바르지 않습니다. 프로그램을 종료합니다.\n");
+		// 'y'나 'Y'가 아니면 루프 종료
+		if (RestartChoice != 'y' && RestartChoice != 'Y') { // != 같지 않다. y, Y가 아니면 게임을 끝내겠다.
 			break;
 		}
-
-		if (character == 1) {
-			playerMaxHP = 3.0f;  // 철수 ♡♡♡
-			playerATK = 1.0f;  // ATK 1.0
-			playerHP = playerMaxHP;
-			printf("\n[철수 선택] HP=♥♥♥, 공격력=1.0\n");
-		}
-		else if (character == 2) {
-			playerMaxHP = 2.0f;  // 영희 ♡♡
-			playerATK = 1.5f;  // ATK 1.5
-			playerHP = playerMaxHP;
-			printf("\n[영희 선택] HP=♥♥, 공격력=1.5\n");
-		}
-		else 
-		{
-			printf("1 또는 2를 선택하세요.\n");
-			continue; // 선택 다시
-		}
-
-		/* 스테이지 1 */
-		if (!playStage(1, &playerHP, &playerATK, playerMaxHP, 3.0f, 1.0f, "적1(♥♥♥, 공격력1.0)")) 
-		{
-			printf("캐릭터 선택부터 다시 시작합니다.\n");
-			continue; // 캐릭터 선택으로 돌아감
-		}
-
-		/* 스테이지 2 */
-		if (!playStage(2, &playerHP, &playerATK, playerMaxHP, 2.0f, 1.5f, "적2(♥♥, 공격력1.5)")) 
-		{
-			printf("캐릭터 선택부터 다시 시작합니다.\n");
-			continue;
-		}
-
-		/* 보스 */
-		if (!playStage(3, &playerHP, &playerATK, playerMaxHP, 4.0f, 2.0f, "보스(♥♥♥♥, 공격력2.0)")) 
-		{
-			printf("캐릭터 선택부터 다시 시작합니다.\n");
-			continue;
-		}
-
-		/* 모든 스테이지 클리어 */
-		printf("\n스테이지 1 클리어, 스테이지 2 클리어, 보스를 물리쳤습니다!\n");
-		printf("게임 끝! 플레이해 주셔서 감사합니다.\n");
-		break; // 프로그램 종료
 	}
 
+	printf("\n게임을 종료합니다. 감사합니다!\n");
 	return 0;
 }
+
+// 3 스테이지 구성 (스테이지 1, 스테이지 2, 보스)
+// 배경 : 깊은 숲 속
+// 각 스테이지 클리어 시 체력 전부 회복 공격력 0.4 증가템,  
+// 스테이지1 클리어 시 스테이지 1 클리어, 스테이지 2 클리어, 보스를 물리쳤습니다. -> 게임 끝과 함께 프로그램 종료
+// 전사, 도적 체력이 0이 되면 다시 캐릭터 선택부터 시작
+
+// 캐릭터 정보
+// 전사의 체력 = ♥♥♥, 30 공격력 10 방어력 5
+// 도적의 체력 = ♥♥, 20 공격력 15 독데미지 3 반격데미지 5
+// 산적1 = ♥♥♥, 30 공격력 10
+// 산적2 = ♥♥, 20 공격력 14
+// 산적 보스 = ♥♥♥♥, 40 공격력 20 방어력 5 , 체력 20 이하일 때 페이즈 2 : 방어력 7.5로 up  
+// 게임 내 최대체력 ♥♥♥♥가 최대
+// 체력 표시 ♥, 데미지를 입은 체력 ♡, 반 체력 ◐ 
+
+// 게임 흐름 
+// 공격: 공격력만큼 데미지를 준다
+// 강한 공격: 1.5배만큼 데미지를 준다, 강한 공격은 충전 필요 3턴에 한번 사용 가능 
+// 독칼 공격:  공격력의 절반데미지 + 중독 부여 매턴 시작 시 1.5씩 데미지를 준다. 
+// 회피: 공격을 피할 확률 12.5% 확률
+// 방어력만큼 방어 후 데미지 입음.
+// 스테이지 끝날 시 보상  1. 공격력 증가템 or 2. 체력 회복 요소(full 회복)
+// 게임오버 playerHealthpoint = 0이면 다시 게임 캐릭터 선택으로 돌아감.
+// 게임종료 = Esc or p 버튼
+// 공격 vs 방어일때 방어 선택자 데미지 = 방어력 - 공격력
+// 회피율 플레이어 20%
+// 회피율 적 10%  
+
+// 추가 요소 
+// 스테이지 클리어 후 경로 2가지 중 하나 택일 왼쪽 = 1, 오른쪽 = 2 을 누르세요
+// 중독데미지는 최대 1중첩, 3턴 동안 유지 
+// 스테이지 클리어 후 체력 풀회복, 아이템 선택창 만들기(아이템 공격력 증가 or 방어력 증가)    
+
+// 체력에 대한 표현을 변수로 대체하여 표현 ex) healthpoint == 30 -> 30을 변수로 대체
+
+
+// 로그라이크 모험 게임 Version 1. 0. 0. 10/28 
+// 함수 선언 void StartBattle(); void Characterchoice();, Characterchoice함수 관련 오류 발생. 스테이지 1구성 중에 중단
+
+// 로그라이크 모험 게임 Version 1. 0. 1. 11/05  
+// Characterchoice함수 -> StartCharacterchoice로 수정, 기존 Characterchoice 변수 -> Character로 변경
+// 0x00007FFCCDB4C5A6(ucrtbased.dll)에(test2.exe의) 처리되지 않은 예외가 있습니다. 0xC0000005: 0x00007FF6D99811D1 위치를 기록하는 동안 액세스 위반이 발생
+// 캐릭터 선택 1을 누를 시 무한 반복 발생 -> CharacterPtr -> Character로 수정하여 해결, 2를 누를 시 플레이어 선택사항에 따라서 컴퓨터와 대전
+// 체력 계산 후 현재 체력 명시 코드 필요, 플레이어 현재체력 출력 코드 필요
+
+// 로그라이크 모험 게임 Version 1. 0. 2. 11/06 
+// 기존 캐릭터 선택 if문 -> enum(열거형) 수정. 수정에 따라 Startbattle함수에서 selectCharactert에 따른 characterchoice 받아야함.
+
+// 로그라이크 모험 게임 Version 1. 0. 3. 11/10 
+// 열거형 포인터 기존 Chracter -> selectcharacter로 변수 조정, Startbattle while반복문 무한 반복문 탈출용 break; 추가
+// 체력 계산 및 현재 체력 코드 필요. 
+// SetplayerStat(selectCharacter, *baseHPptr, *baseATKptr, *baseDEFptr); 에서 역참조값을 대입하는 경우 주소를 받는 것이 아닌 값을 받는 행위이다.
+// 즉, 주소를 받아야 하는데 값을 받았기 때문에(ptr은 포인터가 가리키는 실제 정수값임) NULL 또는 잘못된 주소로 처리되고, 역참조 시 크래시 발생.
+//  SetplayerStat(selectCharacter, baseHPptr, baseATKptr, baseDEFptr); 로 수정하여 버그 해결
+// selectCharacter를 1 또는 2 선택사항에 대한 입력값이 무시되어 플레이어 선택사항을 건너뛰는 문제 발생. -> selectCharacter = input으로 하여 해결. input = 0 이후 *selectCharacter = input하면
+// NULL 포인터가 되어 읽기 액세스 위반 발생 
+// 캐릭터선택에 따라 행동사항을 다르게 하기 위한 입력값 인식에 문제 발생으로 무한루프 발생 -> void함수에서 input을 main으로 옮긴 후 해결, void에서 지역변수의 개념으로 인식하여 매함수마다 넣어줘야함
+// 그래서 input은 전역변수로 선언
+
+// 로그라이크 모험 게임 Version 1. 0. 4. 11/11 
+// 체력 명시 코드 작성, 30 -15-15 인데 0으로 인식 x 
+// Restartchoice 앞에 %c에 입력 시 주소 연산자 & 추가하여 버그 해결
+// 배열 함수 활용하여 도적일 경우 3번 사항에 회피 발생 코드 추가
+// 회피 시 반격데미지 5 추가를 위해 int baseCTRptr 및 포인터 선언
+// + *baseDEFptr, + Enemy.def 로 방어력까지 고려하여 체력 계산  
+// 도적 독칼 공격에 대한 POISON 선언 및 변수 대입
+// 전사 선택사항과 도적 선택사항, 산적1의 선택사항에 따른 결과 표시 및 체력 계산 코드 변동
+// StageReward 함수 선언 -> 스테이지 클리어에 대한 보상 공격력 4 업 or 전체 체력 회복 추후에 추가 예정
+// 독칼 공격 및 적의 회피 후 체력 계산 코드 출력 이후 현재 체력이 나타나지 않는 현상 발생. 
+
+// 로그라이크 모험 게임 Version 1. 0. 5. 11/13 
+//  전사, 도적일 때의 경우의 수에 맞게 Startbattle함수의 공격 판정 코드 선언
+
+// 로그라이크 모험 게임 Version 1. 0. 5. 11/17
+// 스테이지 보상 함수 선언
+// bool함수로 상태이상 독 구현 코드 선언, 아직 수정 필요.
+// 중독이 도적이 2번 공격에 성공했을 때 구현되도록 수정 필요.
