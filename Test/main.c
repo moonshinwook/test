@@ -12,13 +12,21 @@
 // main함수 
 int main() {
 	char RestartChoice = 0;
+	CharacterType character;
+	WARRIOR warrior;
+	THIEF thief;
+	ENEMY Enemy1;
+	ENEMY Enemy2;
+	ENEMY Boss;
+	
 
 	// 게임 재시작을 위한 while 루프
+	srand(time(NULL)); // 난수 생성기 초기화 srand(time(NULL));를 매 턴에서 호출하면 같은 초 안에 입력하면 같은 난수가 나올 수 있습니다. 게임 시작 전에 한 번만 호출
 	while (1) {
-		SelectCharacter();
-		Battlestat();
-		BattleHealth();
-		StartBattle();
+		SelectCharacter(&character);
+		Battlestat(&warrior, &thief, &Enemy1, &Enemy2, &Boss);
+		BattleHealth(&warrior, &thief, &Enemy1, &Enemy2, &Boss);
+		StartBattle(&warrior, &thief, &Enemy1, &Enemy2, &Boss);
 		stageReward();
 
 

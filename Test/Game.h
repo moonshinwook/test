@@ -3,11 +3,11 @@
 #include <stdio.h> // printf 함수 사용을 위한 헤더
 #include <time.h> // 컴퓨터 난수 설정을 위한 헤더
 
-typedef enum Character {
-	warrior,
-	thief,
-	undefined
-}Character;
+typedef enum CharacterType {
+	WARRIOR_TYPE = 0,
+	THIEF_TYPE = 1,
+	UNDEFINED_TYPE = 2
+}CharacterType;
 
 
 // 전사 스탯

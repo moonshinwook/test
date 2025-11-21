@@ -1,40 +1,8 @@
-﻿  game.c
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(11,9): warning C4476: 'printf' : 서식 지정자에 알 수 없는 형식 필드 문자 '\n'이(가) 있습니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(19,10): error C2082: 'warrior' 정식 매개 변수 재정의
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(20,8): error C2082: 'thief' 정식 매개 변수 재정의
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(57,18): warning C4047: '==': 'int'의 간접 참조 수준이 'WARRIOR *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(74,18): warning C4047: '==': 'int'의 간접 참조 수준이 'THIEF *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(108,2): warning C4013: 'srand'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(121,17): warning C4047: '==': 'int'의 간접 참조 수준이 'WARRIOR *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(125,22): warning C4047: '==': 'int'의 간접 참조 수준이 'THIEF *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(132,21): warning C4013: 'rand'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(153,18): warning C4047: '==': 'int'의 간접 참조 수준이 'WARRIOR *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(156,23): warning C4047: '==': 'int'의 간접 참조 수준이 'WARRIOR *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(163,23): warning C4047: '==': 'int'의 간접 참조 수준이 'WARRIOR *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(178,23): warning C4047: '==': 'int'의 간접 참조 수준이 'WARRIOR *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(180,29): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(183,23): warning C4047: '==': 'int'의 간접 참조 수준이 'WARRIOR *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(186,43): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(188,23): warning C4047: '==': 'int'의 간접 참조 수준이 'WARRIOR *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(199,30): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(203,23): warning C4047: '==': 'int'의 간접 참조 수준이 'WARRIOR *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(209,23): warning C4047: '==': 'int'의 간접 참조 수준이 'WARRIOR *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(214,23): warning C4047: '==': 'int'의 간접 참조 수준이 'WARRIOR *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(220,17): warning C4047: '==': 'int'의 간접 참조 수준이 'THIEF *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(223,18): warning C4047: '==': 'int'의 간접 참조 수준이 'THIEF *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(226,23): warning C4047: '==': 'int'의 간접 참조 수준이 'THIEF *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(232,23): warning C4047: '==': 'int'의 간접 참조 수준이 'THIEF *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(247,23): warning C4047: '==': 'int'의 간접 참조 수준이 'THIEF *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(254,23): warning C4047: '==': 'int'의 간접 참조 수준이 'THIEF *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(259,23): warning C4047: '==': 'int'의 간접 참조 수준이 'THIEF *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(275,23): warning C4047: '==': 'int'의 간접 참조 수준이 'THIEF *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(291,23): warning C4047: '==': 'int'의 간접 참조 수준이 'THIEF *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(296,23): warning C4047: '==': 'int'의 간접 참조 수준이 'THIEF *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(322,18): warning C4047: '==': 'int'의 간접 참조 수준이 'WARRIOR *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(325,23): warning C4047: '==': 'int'의 간접 참조 수준이 'THIEF *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(333,18): warning C4047: '==': 'int'의 간접 참조 수준이 'WARRIOR *'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(334,64): warning C4474: 'printf' : 서식 문자열에 전달된 인수가 너무 많습니다.
-      C:\Users\문신욱\Desktop\Test\test\Test\game.c(334,64):
-      자리 표시자 및 해당 매개 변수에는 variadic 인수가 0개 필요하지만 1개가 제공되었습니다.
-  
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(336,23): warning C4047: '==': 'int'의 간접 참조 수준이 'THIEF *'과(와) 다릅니다.
+﻿  main.c
+C:\Users\문신욱\Desktop\Test\test\Test\main.c(24,2): warning C4013: 'srand'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\문신욱\Desktop\Test\test\Test\main.c(26,3): warning C4013: 'SelectCharacter'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\문신욱\Desktop\Test\test\Test\main.c(27,3): warning C4013: 'Battlestat'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\문신욱\Desktop\Test\test\Test\main.c(28,3): warning C4013: 'BattleHealth'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\문신욱\Desktop\Test\test\Test\main.c(29,3): warning C4013: 'StartBattle'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\문신욱\Desktop\Test\test\Test\main.c(30,3): warning C4013: 'stageReward'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+  Test.vcxproj -> C:\Users\문신욱\Desktop\Test\test\x64\Debug\Test.exe
