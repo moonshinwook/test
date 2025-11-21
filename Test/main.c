@@ -12,7 +12,7 @@
 // main함수 
 int main() {
 	char RestartChoice = 0;
-	CharacterType character;
+	CharacterType* character;
 	WARRIOR warrior;
 	THIEF thief;
 	ENEMY Enemy1;
@@ -26,7 +26,7 @@ int main() {
 		SelectCharacter(&character);
 		Battlestat(&warrior, &thief, &Enemy1, &Enemy2, &Boss);
 		BattleHealth(&warrior, &thief, &Enemy1, &Enemy2, &Boss);
-		StartBattle(&warrior, &thief, &Enemy1, &Enemy2, &Boss);
+		StartBattle(&character, &thief, &Enemy1, &Enemy2, &Boss);
 		stageReward();
 
 

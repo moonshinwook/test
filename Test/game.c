@@ -4,98 +4,113 @@
 void SelectCharacter(CharacterType* character)
 {
 	int input = 0;
-	printf("==================================\n");
-	printf("      로그라이크 모험게임\n");
-	printf("==================================\n");
-	printf(" 전사 체력 ♥♥♥(30) 공격력 10 방어력(5)\n\n");
-	printf(" 도적 체력 ♥♥(20) 공격력 15 회피력: 20%\n\n");
-	printf("전사 = 1, 도적 = 2를 누르세요 : \n"); // 숫자 1입력 시 전사, 2입력 시 도적
-	scanf("%d", &input);
-	input --; 
-	    if (input == 0) *character = WARRIOR_TYPE;
-    else if (input == 1) *character = THIEF_TYPE;
-    else *character = UNDEFINED_TYPE;
+	while (1)
+	{
+
+		printf("==================================\n");
+		printf("      로그라이크 모험게임\n");
+		printf("==================================\n");
+		printf(" 전사 체력 ♥♥♥(30) 공격력 10 방어력(5)\n\n");
+		printf(" 도적 체력 ♥♥(20) 공격력 15 회피력: 20%\n\n");
+		printf("전사 = 1, 도적 = 2를 누르세요 : \n"); // 숫자 1입력 시 전사, 2입력 시 도적
+
+
+		if (scanf("%d", &input) == 1)
+		{
+			*character = WARRIOR_TYPE;
+			break;
+		}
+		else if (input == 1)
+		{
+			*character = THIEF_TYPE;
+			break;
+		}
+		else
+		{
+			printf("잘못된 입력입니다. 1 또는 2를 입력해주세요.\n");
+		}
+	}
 }
 
 void Battlestat(WARRIOR* warrior, THIEF* thief, ENEMY* Enemy1, ENEMY* Enemy2, ENEMY* Boss)
 {
-    warrior->hp = 30;
-    warrior->atk = 10;
-    warrior->def = 5;
-    warrior->condition = 0;
+	warrior->hp = 30;
+	warrior->atk = 10;
+	warrior->def = 5;
+	warrior->condition = 0;
 
-    thief->hp = 20;
-    thief->atk = 15;
-    thief->poison = 3;
-    thief->ctr = 5;
-    thief->condition = 5;
+	thief->hp = 20;
+	thief->atk = 15;
+	thief->poison = 3;
+	thief->ctr = 5;
+	thief->condition = 5;
 
-    Enemy1->hp = 30;
-    Enemy1->atk = 10;
-    Enemy1->def = 5;
-    Enemy1->condition = 0;
+	Enemy1->hp = 30;
+	Enemy1->atk = 10;
+	Enemy1->def = 5;
+	Enemy1->condition = 0;
 
-    Enemy2->hp = 20;
-    Enemy2->atk = 14;
-    Enemy2->def = 0;
-    Enemy2->condition = 0;
+	Enemy2->hp = 20;
+	Enemy2->atk = 14;
+	Enemy2->def = 0;
+	Enemy2->condition = 0;
 
-    Boss->hp = 40;
-    Boss->atk = 20;
-    Boss->def = 5;
-    Boss->condition = 0;
+	Boss->hp = 40;
+	Boss->atk = 20;
+	Boss->def = 5;
+	Boss->condition = 0;
 }
 
 void BattleHealth(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY* Enemy1, ENEMY* Enemy2, ENEMY* Boss)
 {
 	// 현재 체력 명시 코드
 		//if (playerchoice > 0 && playerchoice <= 3 && Enemychoice > 0 && Enemychoice <= 3)
-		{
-			if (character == WARRIOR_TYPE) {
-				if (warrior->hp == 30)
-					printf("나의 체력 : ♥♥♥\n");
-				else if (warrior->hp > 20 && warrior->hp < 30)
-					printf("나의 체력 : ♥♥◐\n");
-				else if (warrior->hp == 20)
-					printf("나의 체력 : ♥♥♡\n");
-				else if (warrior->hp > 10 && warrior->hp < 20)
-					printf("나의 체력 : ♥◐♡\n");
-				else if (warrior->hp == 10)
-					printf("나의 체력 : ♥♡♡\n");
-				else if (warrior->hp > 0 && warrior->hp < 10)
-					printf("나의 체력 : ◐♡♡\n");
-				else if (warrior->hp <= 0)
-					printf("나의 체력 : ♡♡♡\n");
-			}
-
-			if (character == THIEF_TYPE) {
-				if (thief->hp == 20)
-					printf("나의 체력 : ♥♥\n");
-				else if (thief->hp > 10 && thief->hp < 20)
-					printf("나의 체력 : ♥◐\n");
-				else if (thief->hp == 10)
-					printf("나의 체력 : ♥♡\n");
-				else if (thief->hp > 0 && thief->hp < 10)
-					printf("나의 체력 : ◐♡\n");
-				else if (thief->hp <= 0)
-					printf("나의 체력 : ♡♡\n");
-			}
-
-			if (Enemy1->hp == 30)
-				printf("산적1의 체력 : ♥♥♥\n");
-			else if (Enemy1->hp > 20 && Enemy1->hp < 30)
-				printf("산적1의 체력 : ♥♥◐\n");
-			else if (Enemy1->hp == 20)
-				printf("산적1의 체력 : ♥♥♡\n");
-			else if (Enemy1->hp > 10 && Enemy1->hp < 20)
-				printf("산적1의 체력 : ♥◐♡\n");
-			else if (Enemy1->hp == 10)
-				printf("산적1의 체력 : ♥♡♡\n");
-			else if (Enemy1->hp > 0 && Enemy1->hp < 10)
-				printf("산적1의 체력 : ◐♡♡\n");
-			else if (Enemy1->hp <= 0)
-				printf("산적1의 체력 : ♡♡♡\n");
+	{
+		if (*character == WARRIOR_TYPE) {
+			if (warrior->hp == 30)
+				printf("나의 체력 : ♥♥♥\n");
+			else if (warrior->hp > 20 && warrior->hp < 30)
+				printf("나의 체력 : ♥♥◐\n");
+			else if (warrior->hp == 20)
+				printf("나의 체력 : ♥♥♡\n");
+			else if (warrior->hp > 10 && warrior->hp < 20)
+				printf("나의 체력 : ♥◐♡\n");
+			else if (warrior->hp == 10)
+				printf("나의 체력 : ♥♡♡\n");
+			else if (warrior->hp > 0 && warrior->hp < 10)
+				printf("나의 체력 : ◐♡♡\n");
+			else if (warrior->hp <= 0)
+				printf("나의 체력 : ♡♡♡\n");
 		}
+
+		if (*character == THIEF_TYPE) {
+			if (thief->hp == 20)
+				printf("나의 체력 : ♥♥\n");
+			else if (thief->hp > 10 && thief->hp < 20)
+				printf("나의 체력 : ♥◐\n");
+			else if (thief->hp == 10)
+				printf("나의 체력 : ♥♡\n");
+			else if (thief->hp > 0 && thief->hp < 10)
+				printf("나의 체력 : ◐♡\n");
+			else if (thief->hp <= 0)
+				printf("나의 체력 : ♡♡\n");
+		}
+
+		if (Enemy1->hp == 30)
+			printf("산적1의 체력 : ♥♥♥\n");
+		else if (Enemy1->hp > 20 && Enemy1->hp < 30)
+			printf("산적1의 체력 : ♥♥◐\n");
+		else if (Enemy1->hp == 20)
+			printf("산적1의 체력 : ♥♥♡\n");
+		else if (Enemy1->hp > 10 && Enemy1->hp < 20)
+			printf("산적1의 체력 : ♥◐♡\n");
+		else if (Enemy1->hp == 10)
+			printf("산적1의 체력 : ♥♡♡\n");
+		else if (Enemy1->hp > 0 && Enemy1->hp < 10)
+			printf("산적1의 체력 : ◐♡♡\n");
+		else if (Enemy1->hp <= 0)
+			printf("산적1의 체력 : ♡♡♡\n");
+	}
 
 }
 
@@ -115,11 +130,11 @@ void StartBattle(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY
 
 
 		// 전사, 도적 선택에 맞춰 행동 선택사항 출력코드 
-		if (character == WARRIOR_TYPE) {
+		if (*character == WARRIOR_TYPE) {
 			printf("공격(1) 강한 공격(2) 방어(3) 중 해당 숫자를 입력하세요 : ");
 			scanf("%d", &playerchoice);
 		}
-		else if (character == THIEF_TYPE)
+		else if (*character == THIEF_TYPE)
 		{
 			printf("공격(1) 독칼 공격(2) 회피(3) 중 해당 숫자를 입력하세요 :  ");
 			scanf("%d", &playerchoice);
@@ -328,7 +343,7 @@ void stageReward(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY
 			warrior->hp = 30;
 			thief->hp = 20;
 			if (character == WARRIOR_TYPE) {
-				printf("체력이 전부 회복되었습니다.\n", warrior-> hp);
+				printf("체력이 전부 회복되었습니다.\n", warrior->hp);
 			}
 			else if (character == THIEF_TYPE) {
 				printf("공격력이 (%d)이(가) 되었습니다.\n", thief->hp);

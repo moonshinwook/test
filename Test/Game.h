@@ -4,9 +4,9 @@
 #include <time.h> // 컴퓨터 난수 설정을 위한 헤더
 
 typedef enum CharacterType {
-	WARRIOR_TYPE = 0,
-	THIEF_TYPE = 1,
-	UNDEFINED_TYPE = 2
+	WARRIOR_TYPE = 1,
+	THIEF_TYPE = 2,
+	UNDEFINED_TYPE
 }CharacterType;
 
 

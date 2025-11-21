@@ -1,8 +1,8 @@
 ﻿  main.c
-C:\Users\문신욱\Desktop\Test\test\Test\main.c(24,2): warning C4013: 'srand'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-C:\Users\문신욱\Desktop\Test\test\Test\main.c(26,3): warning C4013: 'SelectCharacter'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-C:\Users\문신욱\Desktop\Test\test\Test\main.c(27,3): warning C4013: 'Battlestat'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-C:\Users\문신욱\Desktop\Test\test\Test\main.c(28,3): warning C4013: 'BattleHealth'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-C:\Users\문신욱\Desktop\Test\test\Test\main.c(29,3): warning C4013: 'StartBattle'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-C:\Users\문신욱\Desktop\Test\test\Test\main.c(30,3): warning C4013: 'stageReward'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-  Test.vcxproj -> C:\Users\문신욱\Desktop\Test\test\x64\Debug\Test.exe
+C:\Users\Administrator\Desktop\test\Test\main.c(24,2): warning C4013: 'srand'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\Administrator\Desktop\test\Test\main.c(26,3): warning C4013: 'SelectCharacter'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\Administrator\Desktop\test\Test\main.c(27,3): warning C4013: 'Battlestat'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\Administrator\Desktop\test\Test\main.c(28,3): warning C4013: 'BattleHealth'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\Administrator\Desktop\test\Test\main.c(29,3): warning C4013: 'StartBattle'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\Administrator\Desktop\test\Test\main.c(30,3): warning C4013: 'stageReward'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+  Test.vcxproj -> C:\Users\Administrator\Desktop\test\x64\Debug\Test.exe
