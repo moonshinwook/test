@@ -25,9 +25,9 @@ int main() {
 	while (1) {
 		SelectCharacter(&character);
 		Battlestat(&warrior, &thief, &Enemy1, &Enemy2, &Boss);
-		BattleHealth(&warrior, &thief, &Enemy1, &Enemy2, &Boss);
-		StartBattle(&character, &thief, &Enemy1, &Enemy2, &Boss);
-		stageReward();
+		BattleHealth(&character, &warrior, &thief, &Enemy1, &Enemy2, &Boss);
+		StartBattle(&character, &warrior, &thief, &Enemy1, &Enemy2, &Boss);
+		stageReward(&character, &warrior, &thief, &Enemy1, &Enemy2, &Boss);
 
 
 		printf("게임을 다시 시작하시겠습니까? : (Y / N)  ");
@@ -125,3 +125,8 @@ int main() {
 // 스테이지 보상 함수 선언
 // bool함수로 상태이상 독 구현 코드 선언, 아직 수정 필요.
 // 중독이 도적이 2번 공격에 성공했을 때 구현되도록 수정 필요.
+
+// 로그라이크 모험 게임 Version 1. 0. 5. 11/24
+// 헤더파일 구조체, 열거형으로 캐릭터 스탯 정보 선언
+// 버그 발생 -> 함수 인수 대조
+//

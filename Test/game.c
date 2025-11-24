@@ -53,7 +53,7 @@ void Battlestat(WARRIOR* warrior, THIEF* thief, ENEMY* Enemy1, ENEMY* Enemy2, EN
 	Enemy2->hp = 20;
 	Enemy2->atk = 14;
 	Enemy2->def = 0;
-	Enemy2->condition = 0;
+	Enemy2->condition = 0; // -> 왜 여기를 먼저 읽을까?
 
 	Boss->hp = 40;
 	Boss->atk = 20;
@@ -118,17 +118,16 @@ void StartBattle(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY
 {
 	int playerchoice = 0; // 플레이어 선택사항
 	//srand(time(NULL)); // 난수 생성기 초기화 srand(time(NULL));를 매 턴에서 호출하면 같은 초 안에 입력하면 같은 난수가 나올 수 있습니다. 게임 시작 전에 한 번만 호출
-	int Enemychoice = 0; // 적 선택사항
+
 
 	printf("스테이지 1 시작!\n");
 	printf("산적1이 나타났다!\n\n");
 	printf("산적1 체력 ♥♥♥(%d) 공격력(%d) 방어력(%d)\n", Enemy1->hp, Enemy1->atk, Enemy1->def);
 	printf("적의 선택 사항 : 공격 = 1, 방어 = 2, 회피 = 3\n\n");
 	// 전투를 위한 while 루프
-	while (warrior->hp > 0 && Enemy1->hp > 0) {
-		// stage 1  적1 체력 ♥♥♥ 공격력 10
 
-
+	while (warrior->hp > 0 && Enemy1->hp > 0 || thief->hp > 0 && Enemy1->hp > 0)
+	{
 		// 전사, 도적 선택에 맞춰 행동 선택사항 출력코드 
 		if (*character == WARRIOR_TYPE) {
 			printf("공격(1) 강한 공격(2) 방어(3) 중 해당 숫자를 입력하세요 : ");
@@ -160,74 +159,73 @@ void StartBattle(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY
 			//공격 방어 회피 1 2 3
 
 			//전사일 때
-		{
 			//1 vs 1 비김
-			if (character == WARRIOR_TYPE && playerchoice == 1 && Enemychoice == 1) {
-				printf("\n서로 공격하여 비겼습니다.\n");
-			}
-			else if (character == WARRIOR_TYPE && playerchoice == 1 && Enemychoice == 2)
-			{
-				//1 vs 2 산적1방어력 - 전사 공격력
-				printf("\n공격하였습니다.\n");
+		if (character == WARRIOR_TYPE && playerchoice == 1 && Enemychoice == 1) {
+			printf("\n서로 공격하여 비겼습니다.\n");
+		}
+		else if (character == WARRIOR_TYPE && playerchoice == 1 && Enemychoice == 2)
+		{
+			//1 vs 2 산적1방어력 - 전사 공격력
+			printf("\n공격하였습니다.\n");
 
-				Enemy1->hp = Enemy1->hp + Enemy1->def - warrior->atk;
+			Enemy1->hp = Enemy1->hp + Enemy1->def - warrior->atk;
+		}
+		else if (character == WARRIOR_TYPE && playerchoice == 1 && Enemychoice == 3)
+		{
+			//1 vs 3 회피 c가 나온 경우 회피
+			if (EnemyMiss == 'c') {
+				printf("a ~ e 중 나온 알파벳 : %c\n", EnemyMiss);
+				printf("\n산적1은 회피하였습니다,\n");
 			}
-			else if (character == WARRIOR_TYPE && playerchoice == 1 && Enemychoice == 3)
-			{
-				//1 vs 3 회피 c가 나온 경우 회피
-				if (EnemyMiss == 'c') {
-					printf("a ~ e 중 나온 알파벳 : %c\n", EnemyMiss);
-					printf("\n산적1은 회피하였습니다,\n");
-				}
-				//1 vs 3 회피 c외에 나온 경우 공격력 그대로
-				else if (EnemyMiss != 'c') {
-					printf("a ~ e 중 나온 알파벳 : %c\n", EnemyMiss);
-					printf("\n산적1은 회피에 실패했습니다,\n");
-					Enemy1->hp = Enemy1->hp - warrior->atk;
-				}
-			}
-			//2 vs 1 강한 공격 데미지, 산적1공격 데미지
-			else if (character == WARRIOR_TYPE && playerchoice == 2 && Enemychoice == 1) {
-				printf("\n산적1의 공격을 뚫고 강하게 공격하였습니다.\n");
-				Enemy1->hp = Enemy1->hp - warrior->atk * 1.5;
-			}
-			//2 vs 2 강한 공격 - 산적1 방어력
-			else if (character == WARRIOR_TYPE && playerchoice == 2 && Enemychoice == 2)
-			{
-				printf("\n공격하였습니다.\n");
-				Enemy1->hp = Enemy1->hp + Enemy1->def - warrior->atk * 1.5;
-			}
-			else if (character == WARRIOR_TYPE && playerchoice == 2 && Enemychoice == 3)
-			{
-				//2 vs 3 회피 c가 나온 경우 회피
-				if (EnemyMiss == 'c') {
-					printf("a ~ e 중 나온 알파벳 : %c\n", EnemyMiss);
-					printf("\n산적1은 회피하였습니다,\n");
-				}
-				//2 vs 3 회피 c외에 나온 경우 강한공격력 그대로
-				else if (EnemyMiss != 'c') {
-					printf("a ~ e 중 나온 알파벳 : %c\n", EnemyMiss);
-					printf("\n산적1은 회피에 실패했습니다,\n");
-					Enemy1->hp = Enemy1->hp - warrior->atk * 1.5;
-				}
-			}
-			//3 vs 1 전사 방어력 - 산적 1 공격력
-			else if (character == WARRIOR_TYPE && playerchoice == 3 && Enemychoice == 1) {
-				printf("\n산적1의 공격을 뚫고 강하게 공격하였습니다.\n");
-				warrior->hp = warrior->hp - Enemy1->atk;
-			}
-
-			//3 vs 2 방어 방어 둘다 쫄아있다
-			else if (character == WARRIOR_TYPE && playerchoice == 3 && Enemychoice == 2)
-			{
-				printf("\n둘 다 방어만 하면서 쫄았다.\n");
-			}
-			//3 vs 3 아무 일도 일어나지 않았다
-			else if (character == WARRIOR_TYPE && playerchoice == 3 && Enemychoice == 3)
-			{
-				printf("\n아무 일도 일어나지 않았다.\n");
+			//1 vs 3 회피 c외에 나온 경우 공격력 그대로
+			else if (EnemyMiss != 'c') {
+				printf("a ~ e 중 나온 알파벳 : %c\n", EnemyMiss);
+				printf("\n산적1은 회피에 실패했습니다,\n");
+				Enemy1->hp = Enemy1->hp - warrior->atk;
 			}
 		}
+		//2 vs 1 강한 공격 데미지, 산적1공격 데미지
+		else if (character == WARRIOR_TYPE && playerchoice == 2 && Enemychoice == 1) {
+			printf("\n산적1의 공격을 뚫고 강하게 공격하였습니다.\n");
+			Enemy1->hp = Enemy1->hp - warrior->atk * 1.5;
+		}
+		//2 vs 2 강한 공격 - 산적1 방어력
+		else if (character == WARRIOR_TYPE && playerchoice == 2 && Enemychoice == 2)
+		{
+			printf("\n공격하였습니다.\n");
+			Enemy1->hp = Enemy1->hp + Enemy1->def - warrior->atk * 1.5;
+		}
+		else if (character == WARRIOR_TYPE && playerchoice == 2 && Enemychoice == 3)
+		{
+			//2 vs 3 회피 c가 나온 경우 회피
+			if (EnemyMiss == 'c') {
+				printf("a ~ e 중 나온 알파벳 : %c\n", EnemyMiss);
+				printf("\n산적1은 회피하였습니다,\n");
+			}
+			//2 vs 3 회피 c외에 나온 경우 강한공격력 그대로
+			else if (EnemyMiss != 'c') {
+				printf("a ~ e 중 나온 알파벳 : %c\n", EnemyMiss);
+				printf("\n산적1은 회피에 실패했습니다,\n");
+				Enemy1->hp = Enemy1->hp - warrior->atk * 1.5;
+			}
+		}
+		//3 vs 1 전사 방어력 - 산적 1 공격력
+		else if (character == WARRIOR_TYPE && playerchoice == 3 && Enemychoice == 1) {
+			printf("\n산적1의 공격을 뚫고 강하게 공격하였습니다.\n");
+			warrior->hp = warrior->hp - Enemy1->atk;
+		}
+
+		//3 vs 2 방어 방어 둘다 쫄아있다
+		else if (character == WARRIOR_TYPE && playerchoice == 3 && Enemychoice == 2)
+		{
+			printf("\n둘 다 방어만 하면서 쫄았다.\n");
+		}
+		//3 vs 3 아무 일도 일어나지 않았다
+		else if (character == WARRIOR_TYPE && playerchoice == 3 && Enemychoice == 3)
+		{
+			printf("\n아무 일도 일어나지 않았다.\n");
+		}
+
 
 		if (character == THIEF_TYPE)
 		{
@@ -319,39 +317,39 @@ void StartBattle(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY
 //}
 
 // 스테이지 클리어 보상 
-void stageReward(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY* Enemy1, ENEMY* Enemy2, ENEMY* Boss)
-{
-	if (Enemy1->hp <= 0 && warrior->hp > 0 || Enemy1->hp <= 0 && thief->hp > 0)
+	void stageReward(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY* Enemy1, ENEMY* Enemy2, ENEMY* Boss)
 	{
-		int stagereward = 0;
-		printf("스테이지 보상을 고르세요. \n");
-		printf("1. 공격력 +4	2. 체력 회복 \n");
-		scanf("%d", &stagereward);
-		if (stagereward == 1)
+		if (Enemy1->hp <= 0 && warrior->hp > 0 || Enemy1->hp <= 0 && thief->hp > 0)
 		{
-			warrior->atk = warrior->atk + 4;
-			thief->atk = thief->atk + 4;
-			if (character == warrior) {
-				printf("공격력이 (%d)이(가) 되었습니다.\n", warrior->atk);
+			int stagereward = 0;
+			printf("스테이지 보상을 고르세요. \n");
+			printf("1. 공격력 +4	2. 체력 회복 \n");
+			scanf("%d", &stagereward);
+			if (stagereward == 1)
+			{
+				warrior->atk = warrior->atk + 4;
+				thief->atk = thief->atk + 4;
+				if (character == warrior) {
+					printf("공격력이 (%d)이(가) 되었습니다.\n", warrior->atk);
+				}
+				else if (character == thief) {
+					printf("공격력이 (%d)이(가) 되었습니다.\n", thief->atk);
+				}
 			}
-			else if (character == thief) {
-				printf("공격력이 (%d)이(가) 되었습니다.\n", thief->atk);
+			else if (stagereward == 2)
+			{
+				warrior->hp = 30;
+				thief->hp = 20;
+				if (character == WARRIOR_TYPE) {
+					printf("체력이 전부 회복되었습니다.\n", warrior->hp);
+				}
+				else if (character == THIEF_TYPE) {
+					printf("공격력이 (%d)이(가) 되었습니다.\n", thief->hp);
+				}
 			}
-		}
-		else if (stagereward == 2)
-		{
-			warrior->hp = 30;
-			thief->hp = 20;
-			if (character == WARRIOR_TYPE) {
-				printf("체력이 전부 회복되었습니다.\n", warrior->hp);
+			else
+			{
+				printf("잘못된 입력입니다. 다시 입력하세요.\n");
 			}
-			else if (character == THIEF_TYPE) {
-				printf("공격력이 (%d)이(가) 되었습니다.\n", thief->hp);
-			}
-		}
-		else
-		{
-			printf("잘못된 입력입니다. 다시 입력하세요.\n");
 		}
 	}
-}
