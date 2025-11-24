@@ -1,34 +1,33 @@
 ﻿  game.c
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(14,10): warning C4476: 'printf' : 서식 지정자에 알 수 없는 형식 필드 문자 '\n'이(가) 있습니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(143,21): warning C4013: 'rand'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(163,17): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(166,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(173,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(188,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(190,28): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(193,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(196,42): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(198,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(209,29): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(213,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(219,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(224,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(230,17): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(233,18): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(236,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(242,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(257,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(264,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(269,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(285,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(301,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(306,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(332,19): warning C4133: '==': 'WARRIOR *'과(와) 'CharacterType *' 사이의 형식이 호환되지 않습니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(335,24): warning C4133: '==': 'THIEF *'과(와) 'CharacterType *' 사이의 형식이 호환되지 않습니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(343,19): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(344,65): warning C4474: 'printf' : 서식 문자열에 전달된 인수가 너무 많습니다.
-      C:\Users\문신욱\Desktop\Test\test\Test\game.c(344,65):
+C:\Users\Administrator\Desktop\test\Test\game.c(14,10): warning C4476: 'printf' : 서식 지정자에 알 수 없는 형식 필드 문자 '\n'이(가) 있습니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(161,21): warning C4013: 'rand'이(가) 정의되지 않았습니다. extern은 int형을 반환하는 것으로 간주합니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(184,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(191,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(206,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(208,28): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(211,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(214,42): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(216,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(227,29): warning C4244: '=': 'double'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(231,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(237,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(242,22): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(248,17): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(251,18): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(254,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(260,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(275,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(282,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(287,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(303,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(319,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(324,23): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(350,19): warning C4133: '==': 'WARRIOR *'과(와) 'CharacterType *' 사이의 형식이 호환되지 않습니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(353,24): warning C4133: '==': 'THIEF *'과(와) 'CharacterType *' 사이의 형식이 호환되지 않습니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(361,19): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+C:\Users\Administrator\Desktop\test\Test\game.c(362,65): warning C4474: 'printf' : 서식 문자열에 전달된 인수가 너무 많습니다.
+      C:\Users\Administrator\Desktop\test\Test\game.c(362,65):
       자리 표시자 및 해당 매개 변수에는 variadic 인수가 0개 필요하지만 1개가 제공되었습니다.
   
-C:\Users\문신욱\Desktop\Test\test\Test\game.c(346,24): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
-  Test.vcxproj -> C:\Users\문신욱\Desktop\Test\test\x64\Debug\Test.exe
+C:\Users\Administrator\Desktop\test\Test\game.c(364,24): warning C4047: '==': 'CharacterType *'의 간접 참조 수준이 'int'과(와) 다릅니다.
+  Test.vcxproj -> C:\Users\Administrator\Desktop\test\x64\Debug\Test.exe

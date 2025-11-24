@@ -53,7 +53,7 @@ void Battlestat(WARRIOR* warrior, THIEF* thief, ENEMY* Enemy1, ENEMY* Enemy2, EN
 	Enemy2->hp = 20;
 	Enemy2->atk = 14;
 	Enemy2->def = 0;
-	Enemy2->condition = 0; // -> 왜 여기를 먼저 읽을까?
+	Enemy2->condition = 0; 
 
 	Boss->hp = 40;
 	Boss->atk = 20;
@@ -66,6 +66,17 @@ void BattleHealth(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEM
 	// 현재 체력 명시 코드
 		//if (playerchoice > 0 && playerchoice <= 3 && Enemychoice > 0 && Enemychoice <= 3)
 	{
+		// 10으로나누었을 때  30/ 10 = 3  ->  30 / 10 = 3 x n개하트를 그려라,  30 % 10 = 0
+		// % 10 != 0?    28 / 10 = 2 x n -> 28 % 10 :8  1   2 + 1  =3 (m)
+		// 빈하트 그리는 체크
+		// 30 / 10 - 나머지 0
+		// 20 / 10 = 2 나머지 0 -> 2 x n . 
+		// n개의 갯수가 타입의 최대 크기와 같은가? 2 +  0 < 3   (3) -2 빈하트를 그려라
+
+		//char hpArray[3];
+		//hpArray[0];
+		//printf("나의 체력 : %s\n", hpArray);
+
 		if (*character == WARRIOR_TYPE) {
 			if (warrior->hp == 30)
 				printf("나의 체력 : ♥♥♥\n");
@@ -114,6 +125,13 @@ void BattleHealth(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEM
 
 }
 
+// 전투 시작.
+// (1) 정보 출력 - 1번
+
+// (2) 유저 입력
+// (3) 적의 랜덤 실행
+// (4) 데미지 로그 출력
+
 void StartBattle(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY* Enemy1, ENEMY* Enemy2, ENEMY* Boss)
 {
 	int playerchoice = 0; // 플레이어 선택사항
@@ -160,7 +178,7 @@ void StartBattle(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY
 
 			//전사일 때
 			//1 vs 1 비김
-		if (character == WARRIOR_TYPE && playerchoice == 1 && Enemychoice == 1) {
+		if (*character == WARRIOR_TYPE && playerchoice == 1 && Enemychoice == 1) {
 			printf("\n서로 공격하여 비겼습니다.\n");
 		}
 		else if (character == WARRIOR_TYPE && playerchoice == 1 && Enemychoice == 2)
@@ -170,7 +188,7 @@ void StartBattle(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY
 
 			Enemy1->hp = Enemy1->hp + Enemy1->def - warrior->atk;
 		}
-		else if (character == WARRIOR_TYPE && playerchoice == 1 && Enemychoice == 3)
+		else if (*character == WARRIOR_TYPE && playerchoice == 1 && Enemychoice == 3)
 		{
 			//1 vs 3 회피 c가 나온 경우 회피
 			if (EnemyMiss == 'c') {
@@ -185,17 +203,17 @@ void StartBattle(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY
 			}
 		}
 		//2 vs 1 강한 공격 데미지, 산적1공격 데미지
-		else if (character == WARRIOR_TYPE && playerchoice == 2 && Enemychoice == 1) {
+		else if (*character == WARRIOR_TYPE && playerchoice == 2 && Enemychoice == 1) {
 			printf("\n산적1의 공격을 뚫고 강하게 공격하였습니다.\n");
 			Enemy1->hp = Enemy1->hp - warrior->atk * 1.5;
 		}
 		//2 vs 2 강한 공격 - 산적1 방어력
-		else if (character == WARRIOR_TYPE && playerchoice == 2 && Enemychoice == 2)
+		else if (*character == WARRIOR_TYPE && playerchoice == 2 && Enemychoice == 2)
 		{
 			printf("\n공격하였습니다.\n");
 			Enemy1->hp = Enemy1->hp + Enemy1->def - warrior->atk * 1.5;
 		}
-		else if (character == WARRIOR_TYPE && playerchoice == 2 && Enemychoice == 3)
+		else if (*character == WARRIOR_TYPE && playerchoice == 2 && Enemychoice == 3)
 		{
 			//2 vs 3 회피 c가 나온 경우 회피
 			if (EnemyMiss == 'c') {
@@ -210,36 +228,36 @@ void StartBattle(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY
 			}
 		}
 		//3 vs 1 전사 방어력 - 산적 1 공격력
-		else if (character == WARRIOR_TYPE && playerchoice == 3 && Enemychoice == 1) {
+		else if (*character == WARRIOR_TYPE && playerchoice == 3 && Enemychoice == 1) {
 			printf("\n산적1의 공격을 뚫고 강하게 공격하였습니다.\n");
 			warrior->hp = warrior->hp - Enemy1->atk;
 		}
 
 		//3 vs 2 방어 방어 둘다 쫄아있다
-		else if (character == WARRIOR_TYPE && playerchoice == 3 && Enemychoice == 2)
+		else if (*character == WARRIOR_TYPE && playerchoice == 3 && Enemychoice == 2)
 		{
 			printf("\n둘 다 방어만 하면서 쫄았다.\n");
 		}
 		//3 vs 3 아무 일도 일어나지 않았다
-		else if (character == WARRIOR_TYPE && playerchoice == 3 && Enemychoice == 3)
+		else if (*character == WARRIOR_TYPE && playerchoice == 3 && Enemychoice == 3)
 		{
 			printf("\n아무 일도 일어나지 않았다.\n");
 		}
 
 
-		if (character == THIEF_TYPE)
+		if (*character == THIEF_TYPE)
 		{
 			//1 vs 1 비김
-			if (character == THIEF_TYPE && playerchoice == 1 && Enemychoice == 1) {
+			if (*character == THIEF_TYPE && playerchoice == 1 && Enemychoice == 1) {
 				printf("\n서로 공격하여 비겼습니다.\n");
 			}
-			else if (character == THIEF_TYPE && playerchoice == 1 && Enemychoice == 2)
+			else if (*character == THIEF_TYPE && playerchoice == 1 && Enemychoice == 2)
 			{
 				//1 vs 2 산적1방어력 - 도적 공격력
 				printf("\n공격하였습니다.\n");
 				Enemy1->hp = Enemy1->hp + Enemy1->def - thief->atk;
 			}
-			else if (character == THIEF_TYPE && playerchoice == 1 && Enemychoice == 3)
+			else if (*character == THIEF_TYPE && playerchoice == 1 && Enemychoice == 3)
 			{
 				//1 vs 3 회피 c가 나온 경우 회피
 				if (EnemyMiss == 'c') {
@@ -254,19 +272,19 @@ void StartBattle(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY
 				}
 			}
 			//2 vs 1 상태이상 중독, 산적1공격 데미지
-			else if (character == THIEF_TYPE && playerchoice == 2 && Enemychoice == 1) {
+			else if (*character == THIEF_TYPE && playerchoice == 2 && Enemychoice == 1) {
 				printf("\n독칼로 공격합니다.\n");
 				printf("산적1에게 독칼공격을 받았습니다.\n");
 				Enemy1->hp = Enemy1->hp - thief->poison;
 				thief->hp = thief->hp - Enemy1->atk;
 			}
 			//2 vs 2 상태이상 중독
-			else if (character == THIEF_TYPE && playerchoice == 2 && Enemychoice == 2)
+			else if (*character == THIEF_TYPE && playerchoice == 2 && Enemychoice == 2)
 			{
 				printf("\n적의 빈틈에 독칼로 공격했습니다.\n");
 				Enemy1->hp = Enemy1->hp - thief->poison;
 			}
-			else if (character == THIEF_TYPE && playerchoice == 2 && Enemychoice == 3)
+			else if (*character == THIEF_TYPE && playerchoice == 2 && Enemychoice == 3)
 			{
 				//2 vs 3 회피 c가 나온 경우 회피
 				if (THIEFMiss == 'c') {
@@ -282,7 +300,7 @@ void StartBattle(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY
 				}
 			}
 
-			else if (character == THIEF_TYPE && playerchoice == 3 && Enemychoice == 1) {
+			else if (*character == THIEF_TYPE && playerchoice == 3 && Enemychoice == 1) {
 				char THIEFMiss = 'a' + (rand() % 5);
 				//3 vs 1 회피 c가 나온 경우 회피
 				if (THIEFMiss == 'c') {
@@ -298,12 +316,12 @@ void StartBattle(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY
 				}
 			}
 			//3 vs 2 회피 방어 둘다 쫄아있다
-			else if (character == THIEF_TYPE && playerchoice == 3 && Enemychoice == 2)
+			else if (*character == THIEF_TYPE && playerchoice == 3 && Enemychoice == 2)
 			{
 				printf("아무 일도 일어나지 않았다.\n");
 			}
 			//3 vs 3 회피 회피 아무 일도 일어나지 않았다
-			else if (character == THIEF_TYPE && playerchoice == 3 && Enemychoice == 3)
+			else if (*character == THIEF_TYPE && playerchoice == 3 && Enemychoice == 3)
 			{
 				printf("서로 회피하고 난리다.\n");
 			}
@@ -329,10 +347,10 @@ void StartBattle(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY
 			{
 				warrior->atk = warrior->atk + 4;
 				thief->atk = thief->atk + 4;
-				if (character == warrior) {
+				if (*character == WARRIOR_TYPE) {
 					printf("공격력이 (%d)이(가) 되었습니다.\n", warrior->atk);
 				}
-				else if (character == thief) {
+				else if (*character == THIEF_TYPE) {
 					printf("공격력이 (%d)이(가) 되었습니다.\n", thief->atk);
 				}
 			}
@@ -340,10 +358,10 @@ void StartBattle(CharacterType* character, WARRIOR* warrior, THIEF* thief, ENEMY
 			{
 				warrior->hp = 30;
 				thief->hp = 20;
-				if (character == WARRIOR_TYPE) {
+				if (*character == WARRIOR_TYPE) {
 					printf("체력이 전부 회복되었습니다.\n", warrior->hp);
 				}
-				else if (character == THIEF_TYPE) {
+				else if (*character == THIEF_TYPE) {
 					printf("공격력이 (%d)이(가) 되었습니다.\n", thief->hp);
 				}
 			}
